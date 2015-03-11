@@ -1,10 +1,16 @@
+//KMP算法
+//后缀最长前缀匹配
 class Solution {
 public:
     int strStr(char *haystack, char *needle) {
         int hlen = strlen(haystack);
         int nlen = strlen(needle);
-        int* next = new int[nlen];
+        int* next = new int[nlen];		
         getNext(needle, next);
+		//next[i]的含义：
+		//在needle[i]处，后缀与前缀的的最大匹配长度为next[i]
+		//如果在匹配haystack[i]与needle[j]的时候失败
+		//下一次匹配，应是由比较haystack[i+1]与needle[next[j+1]]开始
         int i = 0;
         int j = 0;
         while(i < hlen && j < nlen)
