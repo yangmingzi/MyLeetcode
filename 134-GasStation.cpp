@@ -1,6 +1,7 @@
 //最大子段和
 //如果edge求和大于0，则该题有解
 //从最大字段的开始出出发即可
+//最大子段和的第一个点之前的所有点之和一定为负数，稍微一想就明白了
 class Solution {
 public:
     int canCompleteCircuit(vector<int> &gas, vector<int> &cost)
