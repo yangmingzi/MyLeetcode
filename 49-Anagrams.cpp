@@ -1,4 +1,9 @@
 /*
+Given an array of strings, return all groups of strings that are anagrams.
+
+Note: All inputs will be in lower-case.
+*/
+/*
 所谓的anagrams，就是某个单词打乱其字母顺序形成的新单词，新单词和原单词包含的字母种类相同，每个字母的数目相同。           
 
 用哈希map存储排序后的字符串，map中key为排序后字符串，value为该字符串对应的第一个原字符串在数组中的位置。

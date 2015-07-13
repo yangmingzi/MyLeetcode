@@ -1,4 +1,14 @@
 /*
+Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.
+
+Follow up:
+
+Did you use extra space? 
+A straight forward solution using O(mn) space is probably a bad idea. 
+A simple improvement uses O(m + n) space, but still not the best solution. 
+Could you devise a constant space solution?                          
+*/
+/*
 分析：
 O(mn)解法：用m*n的空间记录每个某个位置是否要设置成0。
 O(m+n)解法：用一个数组记录某一列是否需要设置成0，用一个数组记录某一行是否需要设置成0。

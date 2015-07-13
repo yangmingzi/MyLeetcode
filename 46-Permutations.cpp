@@ -1,4 +1,11 @@
 /*
+Given a collection of numbers, return all possible permutations.
+
+For example,
+[1,2,3] have the following permutations:
+[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
+*/
+/*
 类似于DFS的递归. 
 对于包含n个元素的数组,先确定第一位置的元素，第一个位置有n中可能(每次把后面的元素和第一个元素交换)，
 然后求子数组[2…n]的全排列。由于一个数列的总共有n！个排列，因此时间复杂度为O（n！）

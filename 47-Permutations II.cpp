@@ -1,3 +1,10 @@
+/*
+Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+
+For example,
+[1,1,2] have the following unique permutations:
+[1,1,2], [1,2,1], and [2,1,1].
+*/
 //参考博客：http://www.cnblogs.com/TenosDoIt/p/3662644.html
 class Solution {
 public:

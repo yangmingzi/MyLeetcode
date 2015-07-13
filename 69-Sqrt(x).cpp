@@ -1,3 +1,8 @@
+/*
+Implement int sqrt(int x).
+
+Compute and return the square root of x.
+*/
 //牛顿法，参考博客：http://www.cnblogs.com/TenosDoIt/p/3471926.html
 /*
 面试时需要考虑x是否小于0.

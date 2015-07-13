@@ -1,3 +1,11 @@
+/*
+You are given an n x n 2D matrix representing an image.
+
+Rotate the image by 90 degrees (clockwise).
+
+Follow up:
+Could you do this in-place?
+*/
 //参考博客：http://www.cnblogs.com/TenosDoIt/p/3768734.html
 //先将矩阵转置，然后把转置后的矩阵每一行翻转
 //可以见矩阵看成多个环组成，旋转一个矩阵，相当于把每一个环都旋转。

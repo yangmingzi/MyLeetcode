@@ -1,4 +1,18 @@
 /*
+Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+For example, 
+S = "ADOBECODEBANC" 
+T = "ABC"
+
+Minimum window is "BANC".
+
+Note: 
+If there is no such window in S that covers all characters in T, return the emtpy string "".
+
+If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+*/
+/*
 分析：暴力解决可以在O（n^2）时间复杂度内完成：
 遍历S，当碰到T中的首字母时，以该字母为窗口起始位置找到一个最小窗口包含所有T中的字符，最后取所有窗口的最小值。
 在暴力方法中我们做了很多重复的事情，比如S = “aabc”,T = “abc”,当我们以第一个a为窗口起始位置遍历时，我们要判断b、c是否在T中，
