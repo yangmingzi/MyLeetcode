@@ -4,7 +4,11 @@ find a path from top left to bottom right which minimizes the sum of all numbers
 
 Note: You can only move either down or right at any point in time.
 */
-/*本体可扩展网络最大路径和，参考博客：http://www.cnblogs.com/TenosDoIt/p/3774804.html*/
+/*本题可扩展网络最大路径和，参考博客：http://www.cnblogs.com/TenosDoIt/p/3774804.html*/
+/*
+ACM之家里讲的很好，递归数组的大小是m*n，不应要(m+1)*(n+1)，二维递归+滚动数组
+http://www.acmerblog.com/leetcode-solution-minimum-path-sum-6208.html
+*/
 /*
 典型的动态规划问题。
 
