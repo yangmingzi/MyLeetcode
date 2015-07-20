@@ -1,3 +1,13 @@
+/*
+Given a string S, you are allowed to convert it to a palindrome by adding characters in front of it. 
+Find and return the shortest palindrome you can find by performing this transformation.
+
+For example:
+
+Given "aacecaaa", return "aaacecaaa".
+
+Given "abcd", return "dcbabcd".
+*/
 // Manacher算法
 //求出以第一个字母为起点的最长回文串，然后在字符串前方倒序填充剩余部分
 //Manacher算法参考链接：http://www.cnblogs.com/biyeymyhjob/archive/2012/10/04/2711527.html
