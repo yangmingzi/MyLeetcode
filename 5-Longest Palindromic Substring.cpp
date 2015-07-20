@@ -21,7 +21,7 @@ public:
                 mx=i+p[i];
                 id=i;
             }
-            if(p[i]>resMx){
+            if(p[i]>resMx){//写成resMx<p[i],可提高4ms，为什么？
                 resMx=p[i];
                 resId=i;
             }

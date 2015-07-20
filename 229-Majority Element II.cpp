@@ -13,6 +13,8 @@ public:
     vector<int> majorityElement(vector<int>& nums) {
         vector<int> res;
         int m = 0, n = 0, cm = 0, cn = 0;
+        //for循环地下的if逻辑顺序不可以变，否则会出现【7,7,8,8,8】但返回【8】
+        //因为如果先判断计数器，会导致在一开始m和n同时等于7
         for (int i = 0; i < nums.size(); i++)
         {
             if (nums[i] == m)
