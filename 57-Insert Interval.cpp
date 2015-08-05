@@ -51,7 +51,7 @@ public:
     vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        Interval temp = newInterval;
+        Interval temp = newInterval;//每个区间都有可能被拓展，所以定义一个temp
         vector<Interval> v;
         
         for(int i = 0; i < intervals.size(); i++){
@@ -82,6 +82,11 @@ public:
  *     Interval(int s, int e) : start(s), end(e) {}
  * };
  */
+ /*
+ 分别更新新区间的左右端点
+ 新区间前面的和新区间后面的照常存入
+
+ */
 class Solution {
 public:
     vector<Interval> insert(vector<Interval>& intervals, Interval newInterval) {
@@ -90,14 +95,15 @@ public:
         int n=intervals.size();
         if(n==0){res.push_back(newInterval);return res;}
         int start=0,end=n;
-        int i=0;
-        for(;i<n&&newInterval.start>intervals[i].end;i++){
+        int i=0;//始终使用一个i,仅遍历一次，注意for循环的写法
+        //思考其插入的开始和停止的临界条件，临界条件！第一个end<start时停止，第一个start<=end时开始
+        for(;i<n&&newInterval.start>intervals[i].end;i++){//不被“感染”的条件
            res.push_back(intervals[i]);
         }
-        if(i==n){res.push_back(newInterval);return res;}
+        if(i==n){res.push_back(newInterval);return res;}//特殊情况，新区间是最后一个
         newInterval.start=min(intervals[i].start,newInterval.start);
 
-        for(;i<n&&newInterval.end>=intervals[i].start;i++){
+        for(;i<n&&newInterval.end>=intervals[i].start;i++){//被“感染”的条件
             newInterval.end=max(newInterval.end,intervals[i].end);
         }
         res.push_back(newInterval);
