@@ -43,6 +43,7 @@ public:
     }
 };
 //580ms
+//逻辑更清晰
 //一次遍历，滑动拓展
 //四种情况()[]  []() ([)] [(])
 class Solution {
@@ -54,14 +55,15 @@ public:
         vector<Interval> v;
         
         for(int i = 0; i < intervals.size(); i++){
-            if(intervals[i].start > temp.end){
-                v.push_back(temp);
+            if(intervals[i].start > temp.end){//()[]
+                v.push_back(temp);//新区间向右扩展到极限
                 temp = intervals[i];
             }
-            else if(intervals[i].end < temp.start){
+            else if(intervals[i].end < temp.start){//[]()
                 v.push_back(intervals[i]);
             }
             else{
+                //后两种情况更新新区间
                 temp.start = min(temp.start, intervals[i].start);
                 temp.end = max(temp.end, intervals[i].end);
             }
