@@ -1,3 +1,17 @@
+/*
+Given a binary tree, return the postorder traversal of its nodes' values.
+
+For example:
+Given binary tree {1,#,2,3},
+   1
+    \
+     2
+    /
+   3
+return [3,2,1].
+
+Note: Recursive solution is trivial, could you do it iteratively?
+*/
 //相比于前序遍历，后续遍历思维上难度要大些，
 //前序遍历是通过一个stack，首先压入父亲结点，然后弹出父亲结点，并输出它的value，之后压人其右儿子，左儿子即可。
 //然而后序遍历结点的访问顺序是：左儿子 -> 右儿子 -> 自己。那么一个结点需要两种情况下才能够输出：
@@ -15,31 +29,36 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+ //使用stack
+ /**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
 class Solution {
 public:
-    vector<int> postorderTraversal(TreeNode *root) {
-        vector<int> ans;
-        list<TreeNode*> node_list;
-        if(root == NULL) return ans;
-        node_list.push_front(root);
-        TreeNode *head = root;
-        while(!node_list.empty())
-        {
-            TreeNode *cur = node_list.front();
-            //第一个cur一定是从叶子节点开始，所以第一次执行时对用第三个条件
-            //之后的head=cur对应前两个条件，head不在等于root
-            if(cur -> right == head || cur -> left == head || ((cur -> right == NULL) && (cur -> left == NULL)))
-            {
-                node_list.pop_front();
-                ans.push_back(cur -> val);
-                head = cur;
-            }
-            else
-            {
-                if(cur -> right != NULL) node_list.push_front(cur -> right);
-                if(cur -> left != NULL) node_list.push_front(cur -> left);
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root==NULL) return res;
+        stack<TreeNode*> s;
+        s.push(root);
+        TreeNode* pre=NULL;
+        while(!s.empty()){
+            TreeNode* p=s.top();
+            if((p->left==NULL&&p->right==NULL)||(pre!=NULL&&(pre==p->left||pre==p->right))){
+                res.push_back(p->val);
+                s.pop();
+                pre=p;
+            }else{
+                if(p->right){s.push(p->right);}
+                if(p->left){s.push(p->left);}
             }
         }
-    
+        return res;
     }
 };
+ 
