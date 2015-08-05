@@ -43,6 +43,8 @@ public:
     }
 };
 //580ms
+//一次遍历，滑动拓展
+//四种情况()[]  []() ([)] [(])
 class Solution {
 public:
     vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
