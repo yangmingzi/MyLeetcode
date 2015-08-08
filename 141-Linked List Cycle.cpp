@@ -1,4 +1,10 @@
 /*
+Given a linked list, determine if it has a cycle in it.
+
+Follow up:
+Can you solve it without using extra space?
+*/
+/*
 关于这个问题可以参考http://leonax.net/p/1960/find-circle-in-linked-list/。
 由于每一个父亲只有可能有一个孩子，故这里的环实际上是指list中某一个节点的孩子同时也是它自己或者他的祖先。
 这个问题需要注意几种情况：
@@ -13,7 +19,7 @@
 如果在快的指针能够追上慢的指针，则有环，否则无环。
 */
 
-
+//12ms
 /**
  * Definition for singly-linked list.
  * struct ListNode {
@@ -57,5 +63,30 @@ public:
                 return true;
         }
         
+    }
+};
+//20ms
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool hasCycle(ListNode *head) {
+        if(head==NULL){return false;}
+        ListNode* fast=head;
+        ListNode* slow=head;
+        while(fast->next!=NULL && fast->next->next!=NULL){
+            slow=slow->next;
+            fast=fast->next->next;
+            if(slow==fast){
+                return true;
+            }
+        }
+        return false;
     }
 };
