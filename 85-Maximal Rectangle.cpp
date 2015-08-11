@@ -1,3 +1,6 @@
+/*
+Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
+*/
 //也可以参考一下下面链接里的方法，挺有趣的
 //http://blog.csdn.net/hopeztm/article/details/7870387
 
@@ -15,15 +18,16 @@ public:
 		// DO NOT write int main() function
 		int ans = 0;
 		if(matrix.size() == 0) return ans;
+		int n = matrix.size();
 		int m = matrix[0].size();
 		vector<int>L(m, -1);
 		vector<int>R(m, m);
 		vector<int>H(m, 0);
-		for (int i = 0; i < matrix.size(); ++i)
+		for (int i = 0; i < n; ++i)
 		{
 			//scan from left to right to update H and L
 			int nearestLeft = -1;//virtual '0' at most far of right
-			for (int j = 0; j < matrix[i].size(); ++j)
+			for (int j = 0; j < m; ++j)
 			{
 				L[j] = max(nearestLeft, L[j]);
 				if (matrix[i][j] == '1')
@@ -37,7 +41,7 @@ public:
 			}
 			//scan from right to left to update R and calculate f[i][j]
 			int nearestRight = m;//virtual '0' at most far of left
-			for (int j = matrix[i].size()-1; j >= 0; --j)
+			for (int j = m-1; j >= 0; --j)
 			{
 				R[j] = min(nearestRight, R[j]);
 				if (matrix[i][j] == '0')
