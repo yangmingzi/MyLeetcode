@@ -48,3 +48,37 @@ public:
         if(root->right)inorder(root->right, pre, first, second);
     }
 };
+
+/**/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    void traverse(TreeNode *root,TreeNode *&pre,TreeNode*& first,TreeNode *&second){
+        if(root == NULL) return;
+        traverse(root->left,pre,first,second);
+        if((pre!=NULL) && (pre->val>root->val)){
+            if(first == NULL){first = pre;}
+            second = root;
+        }
+        pre = root;
+        traverse(root->right,pre,first,second);
+        
+    }
+    void recoverTree(TreeNode* root) {
+        TreeNode *first  = NULL;
+        TreeNode *second = NULL;
+        TreeNode *pre    = NULL;
+        traverse(root,pre,first,second);
+        int tmp = first->val;
+        first->val = second->val;
+        second->val = tmp
+    }
+};
