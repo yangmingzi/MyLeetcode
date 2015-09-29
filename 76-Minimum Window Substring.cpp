@@ -33,6 +33,7 @@ start = start+1(此时窗口肯定不会包含所有的T中的字符)，跳转�
 这个跳转会很费时，如果可以在第2步i扫描的过程中保存好T中字符在S中出现的位置，
 那么我们在缩减窗口时就不需要跳过例子中大量的e，只需要跳过b、a这些在T中存在但是不影响窗口的字符。这个可以用辅助队列来实现。
 */
+//32ms
 class Solution {
 public:
     string minWindow(string S, string T) {
@@ -72,5 +73,48 @@ public:
                 }
             }
         return winStart != -1 ? S.substr(winStart, winEnd - winStart +1) : "";
+    }
+};
+
+//16ms（双指针）
+class Solution {
+private:
+    int count1[256];
+    int count2[256];
+public:
+    string minWindow(string s, string t) {
+        if(t.size()==0 || s.size()==0){return "";}
+        memset(count1,0,sizeof(count1));
+        memset(count2,0,sizeof(count2));
+        for(int i=0;i<t.size();i++){
+            count1[t[i]]++;
+            count2[t[i]]++;
+        }
+        int count = t.size();
+        int start = 0;
+        int minSize = INT_MAX;
+        int minStart;
+        for(int end=0;end<s.size();end++){
+            if(count2[s[end]]>0){
+                count1[s[end]]--;
+                if(count1[s[end]]>=0){count--;}
+            }
+            if(count == 0){
+                while(true){
+                    if(count2[s[start]]>0){
+                        if(count1[s[start]]<0){count1[s[start]]++;}
+                        else break;
+                    }
+                    start++;
+                }
+                if(minSize>end-start+1){
+                    minSize = end-start+1;
+                    minStart = start;
+                }
+            }
+        }
+        if(minSize == INT_MAX) return "";
+        string ret(s,minStart,minSize);
+        return ret;
     }
 };
