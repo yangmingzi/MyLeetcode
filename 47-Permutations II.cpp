@@ -6,6 +6,9 @@ For example,
 [1,1,2], [1,2,1], and [2,1,1].
 */
 //参考博客：http://www.cnblogs.com/TenosDoIt/p/3662644.html
+//leetcode的全排列问题：http://www.cnblogs.com/felixfang/p/3705754.html
+//                      http://www.cnblogs.com/felixfang/p/4064374.html
+
 class Solution {
 public:
     vector<vector<int> > permuteUnique(vector<int> &num) {
@@ -40,5 +43,33 @@ public:
             if(num[i] == target)
                 return true;
         return false;
+    }
+};
+//
+class Solution {
+public:
+    vector<vector<int>>  res;
+    
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        perm (nums,0);
+        return res;
+    }
+    void perm(vector<int>& nums,int i){
+        int N = nums.size();
+        if(i == N) res.push_back(nums);
+        set<int> s;
+        for(int j=i;j<N;j++){
+            //这里其实不是特别难理解，这样想：避免两个相同的元素交换位置
+            if(s.find(nums[j]) != s.end()) continue;
+            s.insert(nums[j]);
+            swap(nums,i,j);
+            perm(nums,i+1);
+            swap(nums,i,j);
+        }
+    }
+    void swap(vector<int>& nums,int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 };

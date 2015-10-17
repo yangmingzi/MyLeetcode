@@ -67,3 +67,61 @@ public:
         return true;
     }
 };
+
+//二刷
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if (head == NULL || head->next == NULL)
+        {
+            return true;
+        }
+        ListNode *p = head;
+	    ListNode *q = head;
+	    while (p && p->next)
+	    {
+		    p  = p->next->next;
+		    q  = q->next;
+	    }
+	    q = revert(q);
+	    //下面的判断是为了确定链表节点的数量的奇偶,可写可不写
+	    // if(p){
+	    //     q->next = revert(q->next);
+	    //     q = q->next;
+	    // }else{
+	    //     q = revert(q);
+	    // }
+	    while(q){
+	        if(head->val != q->val){
+	            return false;
+	        }
+	        head = head->next;
+	        q = q->next;
+	    }
+	    return true; 
+    }
+private:
+    ListNode* revert(ListNode *head)
+    {
+	    ListNode *p = head->next;
+	    ListNode *q = head;
+	    while (p != NULL)
+	    {
+		    ListNode *r = p->next;
+		    p->next = q;
+		    q = p;
+		    p = r;
+	    }
+
+	    head->next = NULL;
+	    return q;
+    }
+};
