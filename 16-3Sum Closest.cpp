@@ -20,6 +20,7 @@ The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 对于本题要求的求最接近解，只需要保存当前解以及当前解和目标的距离，如果新的解更接近，则更新解。算法复杂度为O（n^2）;
 注意：我们这里是求的和是一个非确定性的数，因此2sum问题的hashtable解法就不适合这里了
 */
+//12ms
 class Solution {
 public:
     int threeSumClosest(vector<int> &num, int target) {
@@ -70,5 +71,38 @@ public:
                 return target;
         }
         return res;
+    }
+};
+
+
+//16ms
+
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        int res = INT_MAX;
+        int ret;
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n;i++){
+            int j=i+1;
+            int k= n-1;
+            while(j<k){
+                int sum = nums[i]+nums[j]+nums[k];
+                int tmp = abs(sum-target);
+                if(res>tmp){res=tmp;ret = sum;}
+                if(sum==target){return sum;}
+                else if(sum<target){
+                    j++;
+                    while(j<k && nums[j] == nums[j-1]){j++;}
+                }
+                else{
+                    k--;
+                    while(j<k && nums[k] == nums[k+1]){k--;}
+                }
+            }
+        }
+        return ret;
+       
     }
 };

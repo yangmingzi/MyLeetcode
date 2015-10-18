@@ -68,6 +68,7 @@ dp[i-1]不就是更新dp[i]当前的最优解么？这与最大子数组和问�
 
 时间复杂度分析：最坏情况下，相当于遍历了两遍字符串，因此时间复杂度是O（n）
 */
+//16ms
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
@@ -88,5 +89,33 @@ public:
         }
         res = max(res, (int)s.size()-start);//不要忘了最后的判断
         return res;
+    }
+};
+
+//很巧妙地解法 16ms
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+        int locs[256];//保存字符上一次出现的位置
+        memset(locs, -1, sizeof(locs));
+
+        int idx = -1, max = 0;//idx为当前子串的开始位置-1
+        for (int i = 0; i < s.size(); i++)
+        {
+            if (locs[s[i]] > idx)//如果当前字符出现过，那么当前子串的起始位置为这个字符上一次出现的位置+1
+            {
+                idx = locs[s[i]];
+            }
+
+            if (i - idx > max)
+            {
+                max = i - idx;
+            }
+
+            locs[s[i]] = i;
+        }
+        return max;
     }
 };

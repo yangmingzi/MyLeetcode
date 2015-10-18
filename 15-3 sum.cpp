@@ -1,3 +1,15 @@
+/*
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
+The solution set must not contain duplicate triplets.
+    For example, given array S = {-1 0 1 2 -1 -4},
+
+    A solution set is:
+    (-1, 0, 1)
+    (-1, -1, 2)
+*/
 class Solution {
 public:
     vector<vector<int> > threeSum(vector<int> &num) {
@@ -42,6 +54,53 @@ public:
 			}
 		}
 	return result;
+    }
+};
+//
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        for(int i=0;i<n;i++){
+            while(i > 0 && i < n && nums[i] == nums[i-1])
+                i ++;
+            int j = i+1;
+            int k = n-1;
+         while(j<k){
+                int sum = nums[i]+nums[j]+nums[k];
+                if(sum == 0){
+                    vector<int> tmp(3);
+                    tmp[0] = nums[i];
+                    tmp[1] = nums[j];
+                    tmp[2] = nums[k];
+                    res.push_back(tmp);
+                    j++;
+                    k--;
+                    while(j<k&&nums[j]==nums[j-1]){
+                        j++;
+                    }
+                    while(k>j && nums[k] == nums[k+1]){
+                        k--;
+                    }
+                }
+                //下面两个判断中的while去重可以不加，但是加上可以提高效率
+                else if(sum<0){
+                     j++;
+                    //  while(j<k&&nums[j]==nums[j-1]){
+                    //     j++;
+                    // }
+                }
+                else{
+                    k--;
+                    // while(k>j && nums[k] == nums[k+1]){
+                    //     k--;
+                    // }
+                }
+            }
+        }
+        return res;
     }
 };
 
