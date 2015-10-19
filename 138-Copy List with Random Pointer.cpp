@@ -1,3 +1,9 @@
+/*
+A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+
+Return a deep copy of the list.
+*/
+//博客：http://blog.csdn.net/linhuanmars/article/details/22463599
 //第一种算法巧夺天工，十分机敏
 //画图可破之
 //先合并在拆分
@@ -9,6 +15,7 @@
  *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
  * };
  */
+ //100ms,击败100%！！！
  class Solution {
 public:
     RandomListNode *copyRandomList(RandomListNode *head) {
@@ -71,3 +78,43 @@ public:
 	return copiedHead;
 };
 */
+//108ms
+/**
+ * Definition for singly-linked list with a random pointer.
+ * struct RandomListNode {
+ *     int label;
+ *     RandomListNode *next, *random;
+ *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    RandomListNode *copyRandomList(RandomListNode *head) {
+        if(head == NULL) return NULL;
+        RandomListNode* node = head;
+        while(node){
+            RandomListNode* newNode = new RandomListNode(node->label);
+            newNode->next = node->next;
+            node->next = newNode;
+            node = node->next->next;
+        }
+        node  = head;
+        while(node){
+            if(node->random){
+                node->next->random = node->random->next;
+            }
+            node = node->next->next;
+        }
+        node = head;
+        RandomListNode* newHead = node->next;
+        while(node){
+            RandomListNode* newNode = node->next;
+            node->next = newNode->next;
+            if(node->next){
+                newNode->next = node->next->next;
+            }
+            node = node->next;
+        }
+        return newHead;
+    }
+};
