@@ -1,3 +1,9 @@
+/*
+Given an array of n positive integers and a positive integer s, find the minimal length of a subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+For example, given the array [2,3,1,2,4,3] and s = 7,
+the subarray [4,3] has the minimal length under the problem constraint.
+*/
 //滑动窗口
 class Solution {
 public:
@@ -16,5 +22,25 @@ public:
             }
         }
         return flag ? len : 0;
+    }
+};
+
+//二刷 一刷 速度相同  4ms  29.31%
+class Solution {
+public:
+    int minSubArrayLen(int s, vector<int>& nums) {
+        if(nums.size()==0) return 0;
+        int res= INT_MAX ;
+        int i=0,j=0,sum=0;
+        while(i<=j && j<nums.size() && sum<s){
+            sum+=nums[j];
+            while(i<=j && sum>=s){
+                res = min(res,j-i+1);
+                sum-=nums[i];
+                i++;
+            }
+            j++;
+        }
+        return res==INT_MAX?0:res;
     }
 };

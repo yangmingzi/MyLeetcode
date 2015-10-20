@@ -59,3 +59,42 @@ public:
         return tmpHead.next;
     }
 };
+//二刷，和一刷的方法、速度都一样，36ms,48.35%，代码稍稍精简了一些
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        int carry = 0;
+        ListNode* tmp = new ListNode(0);
+        ListNode *res = tmp;
+        while(l1 && l2){
+            l1->val += (l2->val+carry);
+            carry = l1->val/10;
+            l1->val = l1->val%10;
+            res->next = l1;
+            res = l1;
+            l1 = l1->next;
+            l2 = l2->next;
+        }
+        ListNode* noEm = (l1==NULL?l2:l1);
+        while(noEm){
+            noEm->val = noEm->val + carry;
+            carry = noEm->val/10;
+            noEm->val = noEm->val%10;
+            res->next = noEm;
+            res = noEm;
+            noEm = noEm->next;
+        }
+        if(carry!=0){
+            res->next = new ListNode(carry);
+        }
+        return tmp->next;
+    }
+};

@@ -13,6 +13,7 @@ C(100), D(500)是一组， M(1000), d(应该是D加一个上划线，表示5000)
 十位上的数字1~9，只要把原来个位上的I 替换成 X， V 替换成L，X替换成C，即十位上的1~9表示的是10~90.
 百位、千位以此类推。。。。。。
 */
+//一刷  32ms   48.60%
 class Solution {
 public:
     string intToRoman(int num) {
@@ -49,5 +50,29 @@ public:
             res.push_back(romanChar[0]);
             res.push_back(romanChar[2]);
         }
+    }
+};
+ 
+//二刷 60ms  6.13%
+class Solution {
+    public :
+    string intToRoman(int num) {
+    vector<vector<string>> roman = {
+            {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"},
+            {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"},
+            {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"},
+            {"", "M", "MM", "MMM"}
+        };
+        
+        string ret = "";
+        int digit = 0;
+        while (num != 0) {
+            int remain = num % 10;
+            ret = roman[digit][remain] + ret;
+            digit++;
+            num /= 10;
+        }
+        
+        return ret;
     }
 };

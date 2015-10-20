@@ -31,6 +31,7 @@ A solution set is:
 
 需要注意的是：如果数组中包含重复元素，我们要忽略（因为每个数字可以选择多次，如果不忽略的话，就会产生重复的结果）。貌似oj的测试集数组中都不包含重复的数字
 */
+//一刷，36ms , 21.67%
 class Solution {
 private:
     vector<vector<int> > res;
@@ -57,5 +58,29 @@ public:
                 helper(candidates, i, target - candidates[i], tmpres);
                 tmpres.pop_back();
             }
+    }
+};
+
+//二刷，16ms,66.2%
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> tmp;
+        sort(candidates.begin(),candidates.end());
+        dfs(candidates,target,0,tmp,0);
+        return res;
+    }
+    void dfs(vector<int>& can,int target,int curSum,vector<int>& tmp,int dep){
+        if(curSum == target){res.push_back(tmp);}
+        for(int i = dep;i<can.size();i++){
+            if(i ==0 || can[dep]!=can[dep-1]){
+                if(curSum+can[i]<=target){
+                    tmp.push_back(can[i]);
+                    dfs(can,target,curSum+can[i],tmp,i);
+                    tmp.pop_back();
+                }
+            }
+        }
     }
 };
