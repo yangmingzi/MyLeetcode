@@ -1,3 +1,22 @@
+/*
+Given a collection of integers that might contain duplicates, nums, return all possible subsets.
+
+Note:
+Elements in a subset must be in non-descending order.
+The solution set must not contain duplicate subsets.
+For example,
+If nums = [1,2,2], a solution is:
+
+[
+  [2],
+  [1],
+  [1,2,2],
+  [2,2],
+  [1,2],
+  []
+]
+*/
+//子集思想总结：http://www.cnblogs.com/felixfang/p/3775712.html
 //参考博客（提供多种解法）：http://www.cnblogs.com/TenosDoIt/p/3451902.html
 /*
 dfs解法。
@@ -7,6 +26,7 @@ dfs解法。
 假设下面还有一个2，那么我们只在第四层的包含两个2的集合{1,2,2}、{2,2}上再添加2，其它都不添加。
 因此dfs时，如果当前处理的数字前面出现了k次，那么我们要处理的集合中必须包含k个该元素。代码如下：
 */
+//16ms
 class Solution {
 private:
     vector<vector<int> >res;
@@ -39,5 +59,26 @@ public:
         }
         //不选择S[iend]
         dfs(S, iend+1, tmpres);
+    }
+};
+
+//二刷，8ms
+class Solution {
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> tmp;
+        sort(nums.begin(),nums.end());
+        dfs(nums,res,tmp,0);
+        return res;
+    }
+    void dfs(vector<int> &nums,vector<vector<int>> &res,vector<int> &tmp,int dep){
+        res.push_back(tmp);
+        for(int i=dep;i<nums.size();i++){
+            if(i!=dep&&nums[i]==nums[i-1]){continue;}
+            tmp.push_back(nums[i]);
+            dfs(nums,res,tmp,i+1);
+            tmp.pop_back();
+        }
     }
 };
