@@ -15,6 +15,7 @@ return [3, 4].
 它返回的是第一个不小于目标数的元素位置；upper_bound当A[middle] == target时，
 继续向右半部分查找，它返回的是第一个大于目标数的元素位置。
 */
+//12ms,11.90%
 class Solution {
 public:
     vector<int> searchRange(vector<int>& nums,  int target) {
@@ -63,5 +64,55 @@ public:
             else high = middle - 1;
         }
         return low;
+    }
+};
+
+//二刷  12ms 11.90%
+
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums,  int target) {
+        vector<int> res;
+        int n = nums.size();
+        if(n <= 0)
+            return res;
+ 
+        int leftIndex = lSearch(nums, target);
+        int rightIndex = rSearch(nums, target);
+         
+        res.push_back(leftIndex);
+        res.push_back(rightIndex);
+        return res;
+    }
+ 
+    int lSearch(vector<int>& nums,  int target) {
+        int n = nums.size();
+        int low = 0, high = n-1;
+        while(low <= high) { // q1
+            int mid = (low+high)>>1;
+            if(nums[mid] < target) { // q2
+                low = mid+1;
+            }else{
+                high = mid-1;
+            }
+        }
+        if(nums[low] != target)
+            return -1;
+        return low; // q3
+    }
+    int rSearch(vector<int>& nums,  int target) {
+        int n = nums.size();
+        int low = 0, high = n-1;
+        while(low <= high) { // q1
+            int mid = (low+high)>>1;
+            if(nums[mid] > target) { // q2
+                high = mid-1;
+            }else{
+                low = mid +1;
+            }
+        }
+        if(nums[high] != target)
+            return -1;
+        return high; // q3
     }
 };
