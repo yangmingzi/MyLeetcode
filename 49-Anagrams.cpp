@@ -35,3 +35,25 @@ public:
         return res;
     }
 };
+
+//二刷
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> res;
+        map<string,vector<string>> m;
+        sort(strs.begin(),strs.end());
+        for(int i=0;i<strs.size();i++){
+           m[getOr(strs[i])].push_back(strs[i]);
+        }
+        for(map<string,vector<string>>::iterator it = m.begin();it!=m.end();it++){
+            res.push_back(it->second);
+        }
+        return res;
+    }
+    string getOr(string s){
+        sort(s.begin(),s.end());
+        return s;
+    }
+};
+  
