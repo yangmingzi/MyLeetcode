@@ -59,3 +59,22 @@ public:
         return result;
     }
 };
+//二刷，解法太聪明
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int start = -1;
+        int sum=0;
+        int total=0;
+        for(int i=0;i<gas.size();i++){
+            int tmpX = gas[i] - cost[i];
+            sum+=tmpX;
+            if(sum<0){
+                start = i;
+                sum   = 0;
+            }
+            total+=tmpX;
+        }
+        return total < 0? -1 :start+1;
+    }
+};
