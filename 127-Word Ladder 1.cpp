@@ -37,3 +37,34 @@ public:
         return ret;
     }
 };
+
+//二刷，bfs,最短的一定最先到达，420ms,25.89%
+class Solution {
+public:
+    int ladderLength(string start, string end, unordered_set<string>& dict) {
+        dict.insert(start);
+        dict.insert(end);
+        queue<string> q;
+        q.push(start);
+        dict.erase(start);
+        map<string,int> distance;
+        distance[start] = 1;
+        while(!q.empty()){
+            string tmp = q.front();
+            q.pop();
+            for(int i=0;i<tmp.size();i++){
+                for(char ch ='a';ch<='z';ch++){
+                    string tmpChange = tmp;
+                    tmpChange [i] = ch;
+                    if(dict.find(tmpChange)!=dict.end()){
+                        distance[tmpChange] = distance[tmp]+1;
+                        if(tmpChange == end) {return distance[tmpChange];} 
+                        q.push(tmpChange);
+                        dict.erase(tmpChange);
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+};
