@@ -1,3 +1,12 @@
+/*
+Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+
+For example,
+Given [100, 4, 200, 1, 3, 2],
+The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+
+Your algorithm should run in O(n) complexity.
+*/
 //SET MAP 的访问速度+原理+实现必须掌握！！！！！！
 //元素之间的联系，例如连续数字和相互之间有关系的事件，可以联想到图模型
 /*

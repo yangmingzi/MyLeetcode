@@ -21,9 +21,9 @@ public:
         if (divisor == 0 || (dividend == INT_MIN && divisor == -1)) return INT_MAX;
         long m = labs(dividend), n = labs(divisor), res = 0;
         long sign = ((dividend < 0) ^ (divisor < 0)) ? -1 : 1;
-        if (n == 1) return m * sign;
+        if (n == 1) return m * sign;//这里也都要用labs后的除数和被除数
         while (m >= n) {
-            long k = n;
+            long k = n;//这里写成int就会超时
             int i = 0;
             while (k <= m) {
                 m -= k;

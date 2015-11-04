@@ -5,6 +5,7 @@
 dp[i][j] = (dp[i][j-1] ==true && s3[i+j-1] == s2[j-1]) || (dp[i-1][j] == true && s3[i-1+j] == s1[i-1])
 初始条件：if(s1[0] == s3[0])dp[1][0] = true  ，  if(s2[0] == s3[0])dp[0][1] = true; 其他值均为false
 */
+//0ms，80.95%
 class Solution {
 public:
     bool isInterleave(string s1, string s2, string s3) {
@@ -40,5 +41,36 @@ public:
             }
         if(dp[len1][len2])return true;
         else return false;
+    }
+};
+//二刷，4ms,56.45%
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        int len1 = s1.size();
+        int len2 = s2.size();
+        int len3 = s3.size();
+        if(len1+len2!=len3) return false;
+        bool dp[len1+1][len2+1];
+        memset(dp,false,sizeof(bool)*(len1+1)*(len2+1));
+        dp[0][0] = true;
+        for(int i=1;i<=len1;i++){
+            if(s1[i-1] == s3[i-1]){
+                dp[i][0] = true;
+            }else{break;}
+        }
+        for(int i=1;i<=len2;i++){
+            if(s2[i-1]==s3[i-1]){
+                dp[0][i] = true;
+            }else{break;}
+        }
+        for(int i=1;i<=len1;i++){
+            for(int j=1;j<=len2;j++){
+                int k=i+j;
+                if(s1[i-1]==s3[k-1]) dp[i][j] = dp[i-1][j] || dp[i][j];
+                if(s2[j-1]==s3[k-1]) dp[i][j] = dp[i][j-1] || dp[i][j];
+            }
+        }
+        return dp[len1][len2];
     }
 };
