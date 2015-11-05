@@ -18,6 +18,7 @@ When the cache reached its capacity, it should invalidate the least recently use
 查询或者访问节点时，如果节点存在，把该节点交换到链表头部，同时更新hash表中该节点的地址
 插入节点时，如果cache的size达到了上限，则删除尾部节点，同时要在hash表中删除对应的项。新节点都插入链表头部。     
 */
+//92ms,53.86%
 class KeyValue {
 public:
     int key, value;
@@ -93,5 +94,129 @@ public:
                 size--;
             }
         }
+    }
+};
+//60ms,99.48%
+struct Node{
+    int key;
+    int value;
+    Node* hashFormer;
+    Node* hashNext;
+    Node* queueFormer;
+    Node* queueNext;
+};
+
+class LRUCache{
+public:
+    Node **hashTable;
+    Node* head;
+    Node* tail;
+    int size,hashKey,cacheCapacity;
+    LRUCache(int capacity) {
+        size=0;
+        cacheCapacity=capacity;
+        hashKey=capacity*3;
+        hashTable=new Node*[capacity*3];
+        head=tail=NULL;
+        for(int i=0;i<capacity*3;i++){
+            hashTable[i]=new Node;
+            hashTable[i]->key=hashTable[i]->value=-1;
+            hashTable[i]->hashFormer=hashTable[i]->hashNext=hashTable[i]->queueFormer=hashTable[i]->queueNext=NULL;
+        }
+    }
+    
+    int get(int key) {
+        Node* p=hashTable[key%hashKey]->hashNext;
+        while(p)
+        {
+            if(p->key==key)
+                break;
+            p=p->hashNext;
+        }
+        if(p==NULL)
+            return -1;
+        else{
+            if(p->queueFormer){
+                if(p->queueNext==NULL){
+                    tail=p->queueFormer;
+                    tail->queueNext=NULL;
+                    p->queueNext=head;
+                    p->queueFormer=NULL;
+                    head->queueFormer=p;
+                    head=p;
+                }
+                else{
+                    p->queueFormer->queueNext=p->queueNext;
+                    p->queueNext->queueFormer=p->queueFormer;
+                    p->queueFormer=NULL;
+                    p->queueNext=head;
+                    head->queueFormer=p;
+                    head=p;
+                }
+            }
+            return p->value;
+        }
+    }
+    
+    void set(int key, int value) {
+        Node* p=hashTable[key%hashKey]->hashNext;
+        while(p)
+        {
+            if(p->key==key)
+                break;
+            p=p->hashNext;
+        }
+        if(p==NULL){
+            size++;
+            p=new Node;
+            p->key=key;
+            p->value=value;
+            if(hashTable[key%hashKey]->hashNext){
+                hashTable[key%hashKey]->hashNext->hashFormer=p;
+            }
+            p->hashFormer=hashTable[key%hashKey];
+            p->hashNext=hashTable[key%hashKey]->hashNext;
+            hashTable[key%hashKey]->hashNext=p;
+            if(head!=NULL)
+                head->queueFormer=p;
+            p->queueFormer=NULL;
+            p->queueNext=head;
+            head=p;
+            if(tail==NULL)
+                tail=head;
+    
+            if(size>cacheCapacity){
+                size--;
+                tail->hashFormer->hashNext=tail->hashNext;
+                if(tail->hashNext)
+                    tail->hashNext->hashFormer=tail->hashFormer;
+                p=tail;
+                tail=tail->queueFormer;
+                tail->queueNext=NULL;
+                delete p;
+            }
+        }
+        else{
+            if(p->queueFormer){
+                if(p->queueNext==NULL){
+                    tail=p->queueFormer;
+                    tail->queueNext=NULL;
+                    p->queueNext=head;
+                    p->queueFormer=NULL;
+                    head->queueFormer=p;
+                    head=p;
+                }
+                else{
+                    p->queueFormer->queueNext=p->queueNext;
+                    p->queueNext->queueFormer=p->queueFormer;
+                    p->queueFormer=NULL;
+                    p->queueNext=head;
+                    head->queueFormer=p;
+                    head=p;
+                }
+            }
+            p->value=value;
+        }
+        return;
     }
 };
