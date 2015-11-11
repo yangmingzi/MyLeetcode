@@ -49,3 +49,30 @@ private:
         }
     }
 };
+//二刷，自己做， 4 ms，12.58%
+ class Solution {
+public:
+    vector<string> res;
+    vector<string> generateParenthesis(int n) {
+        res.clear();
+        if(n<1) return res;
+        string cur="";
+        cur.clear();
+        dfs(n,0,0,cur);
+        return res;
+    }
+    void dfs(int n,int left,int right,string& cur){
+        if(left == n && right == n){res.push_back(cur);return;}
+        if(n-left>n-right){return;}
+        if(n-left>0){
+            cur+="(";
+            dfs(n,left+1,right,cur);
+            cur = cur.substr(0,cur.size()-1);
+        }
+        if(n-right>0){
+            cur+=')';
+            dfs(n,left,right+1,cur);
+            cur = cur.substr(0,cur.size()-1);
+        }
+    }
+};

@@ -8,6 +8,7 @@ A straight forward solution using O(mn) space is probably a bad idea.
 A simple improvement uses O(m + n) space, but still not the best solution. 
 Could you devise a constant space solution?                          
 */
+//http://blog.csdn.net/doc_sgl/article/details/11834933
 /*
 分析：
 O(mn)解法：用m*n的空间记录每个某个位置是否要设置成0。

@@ -28,3 +28,31 @@ public:
         return ans;
     }
 };
+//为什么这样写是错的？递归在编程中的本质是什么？
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector<int> res;
+        if(root == NULL) return res;
+        res.push_back(root->val);
+        if(root->left)preorderTraversal(root->left);
+        if(root->right)preorderTraversal(root->right);
+        return res;
+    }
+};
+//递归的应该这样写
+class Solution {
+public:
+     vector<int> res;
+    vector<int> preorderTraversal(TreeNode* root) {
+        res.clear();
+        preorder(root);
+        return res;
+    }
+    void preorder(TreeNode* root){
+        if(root == NULL) return;
+        res.push_back(root->val);
+        preorder(root->left);
+        preorder(root->right);
+    }
+};
