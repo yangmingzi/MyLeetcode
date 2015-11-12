@@ -24,6 +24,7 @@ convert("PAYPALISHIRING", 3) should return "PAHNAPLSIIGYIR".
 
 代码如下，时间复杂度为O（n），n是字符串的长度：
 */
+//20ms,53.81%
 class Solution {
 public:
     string convert(string s, int nRows) {
@@ -43,6 +44,24 @@ public:
         }
         for(int j = nRows-1; j < len ; j += interval)//处理最后一行
             res[k++] = s[j];
+        return res;
+    }
+};
+//24ms,38.22%
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if(numRows == 1) return s;
+        string res="";
+        string tmp[numRows];
+        int i=0;
+        while(i<s.size()){
+            for(int j=0;         i<s.size() && j<numRows;j++){tmp[j] += s[i++];}
+            for(int j=numRows-2 ;i<s.size() && j>0;      j--){tmp[j] += s[i++];}
+        }
+        for(int k=0;k<numRows;k++){
+            res+=tmp[k];
+        }
         return res;
     }
 };
