@@ -35,7 +35,7 @@ public:
     void getNext(char *needle, int next[])
     {// self match to contruct next array
         int nlen = strlen(needle);
-        int j = -1;     /=/ slow pointer
+        int j = -1;     // slow pointer
         int i = 0;      // fast pointer
         next[i] = -1;    //init next has one element
         while(i < nlen-1)
@@ -52,5 +52,51 @@ public:
                 j = next[j];    //jump to the previous position to try matching
             }
         }
+    }
+};
+//简介的代码
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        int i, j;
+        for (i = j = 0; i < haystack.size() && j < needle.size();) {
+            if (haystack[i] == needle[j]) {
+                ++i; ++j;
+            } else {
+                i -= j - 1; j = 0;
+            }
+        }
+        return j != needle.size() ? -1 : i - j;
+    }
+};
+//参数不同，由指针变成字符串，KMP
+class Solution {
+public:
+    void getNext(vector<int> &next,string &needle){
+        int i=0,j=-1;
+        next[i] = j;
+        while(i<needle.size()-1){
+            while(j != -1 && needle[i]!=needle[j]){
+                j = next[j];
+            }
+            i++;
+            j++;
+            if(needle[i] == needle[j]) next[i]=next[j];
+            else next[i] = j;
+        }
+    }
+    int strStr(string haystack, string needle) {
+        if (haystack.empty()) return needle.empty() ? 0 : -1;
+        if (needle.empty())   return 0;
+        vector<int> next(needle.size()+1);
+        getNext(next,needle);
+        int i=0,j=0;
+        while(i != haystack.size()){
+            while(j!=-1 && haystack[i] != needle[j]){j=next[j];}
+            i++;
+            j++;
+            if(j == needle.size()) return i-j;
+        }
+        return -1;
     }
 };

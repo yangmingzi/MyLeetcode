@@ -1,3 +1,21 @@
+/*
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+
+For example,
+Given "egg", "add", return true.
+
+Given "foo", "bar", return false.
+
+Given "paper", "title", return true.
+
+Note:
+You may assume both s and t have the same length.
+*/
+
 //将同构关系转为映射去思考，双向映射（如果单向映射不能满足，例如aa和ab）
 //考虑到映射，就选择了Map数据结构
 //不可以多个字符映射到同一个字符中去，比如aa和ab。因此要有两个hash表来记录

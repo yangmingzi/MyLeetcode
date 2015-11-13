@@ -51,3 +51,28 @@ public:
         return strs[0].substr(0, len);
     }
 };
+//二刷，自己写的，感觉逻辑更清晰，速度属于前列,4ms,37.82%
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        int n = strs.size();
+        string res = "";
+        if(n==0) return res;
+        int len = INT_MAX;
+        for(int i=0;i<strs.size();i++){
+            int tmplen = strs[i].size();
+            len = min(len,tmplen);
+        }
+        int k=0;
+        for(int i=0;i<len;i++){
+            int cnt=0;
+            for(int j=0;j<strs.size();j++){
+                if(strs[j][i]!=strs[0][i]){ break;}
+                else{cnt++;}
+            }
+            if(cnt == strs.size()){k++;}
+            else break;
+        }
+        return res+=strs[0].substr(0,k);
+    }
+};

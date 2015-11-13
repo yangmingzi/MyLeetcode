@@ -46,3 +46,43 @@ public:
         return a == b;
     }
 };
+//二刷，速度相同但感觉逻辑更清晰
+class Solution {
+public:
+    bool isLegal(char c){
+        if((c>='A'&&c<='Z')||(c>='a'&&c<='z')||(c>='0'&&c<='9'))
+            return true;
+        else return false;
+    }
+    char upToLow(char c){
+        return c+'a'-'A';
+    }
+    bool isPalindrome(string s) {
+        int i=0,j=s.size()-1;
+        bool flag = true;
+        while(i<j){
+            if(!isLegal(s[i])){
+                i++;
+                continue;
+            }
+            if(!isLegal(s[j])){
+                j--;
+                continue;
+            }
+            if(s[i]>='A'&&s[i]<='Z'){
+                s[i] = upToLow(s[i]);
+            }
+             if(s[j]>='A'&&s[j]<='Z'){
+                s[j] = upToLow(s[j]);
+            }
+            if(s[i]!=s[j]){
+                flag = false;
+                break;
+            }else{
+                i++;
+                j--;
+            }
+        }
+        return flag;
+    }
+};
