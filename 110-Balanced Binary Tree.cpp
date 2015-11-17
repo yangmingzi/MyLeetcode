@@ -39,3 +39,33 @@ public:
         return 1+max(leftHeight, rightHeight);//中间过程返回值
     }
 };
+//
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool flag = true;
+    bool isBalanced(TreeNode* root) {
+        if(root == NULL) return true;
+        dfs(root);
+        return flag;
+    }
+    int dfs(TreeNode* root){
+         if(root==NULL) return true;
+         int h1,h2;
+         if(root->left==NULL) h1=0;
+         else h1=dfs(root->left);
+         if(root->right==NULL) h2=0;
+         else h2=dfs(root->right);
+         if(abs(h1-h2)>1) flag=0;
+         return max(h1,h2)+1;
+    }
+    
+};

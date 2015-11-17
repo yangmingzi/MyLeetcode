@@ -35,3 +35,17 @@ public:
         return res;
     }
 };
+//二刷，自己做
+class Solution {
+public:
+    int titleToNumber(string s) {
+        int sum = 0;
+        int cnt = 0;
+        for(int i=s.size()-1;i>=0;i--){
+            int tmp = s[i]-'A' + 1;
+            sum  = sum + pow(26,cnt)*tmp;
+            cnt++;
+        }
+        return sum;
+    }
+};

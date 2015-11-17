@@ -35,3 +35,32 @@ public:
         return head;
     }
 };
+
+//二刷，自己写的，速度前列
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(head == NULL) return NULL;
+        ListNode* pre = head;
+        ListNode* p = head->next;
+        while(p){
+            if(p->val == pre->val){
+                ListNode* tmp = p->next;
+                pre->next = tmp;
+                p = pre->next;
+            }else{
+                p = p->next;
+                pre = pre->next;
+            }
+        }
+        return head;
+    }
+};
