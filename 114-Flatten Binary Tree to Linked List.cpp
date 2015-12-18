@@ -1,3 +1,27 @@
+/*
+Given a binary tree, flatten it to a linked list in-place.
+
+For example,
+Given
+
+         1
+        / \
+       2   5
+      / \   \
+     3   4   6
+The flattened tree should look like:
+   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+*/
 //前序遍历，谦虚遍历
 /**
  * Definition for binary tree
@@ -61,37 +85,51 @@ public:
 };
 
 /*
-Given
-
-         1
-        / \
-       2   5
-      / \   \
-     3   4   6
- The flattened tree should look like:
-
-   1
-    \
-     2
-      \
-       3
-        \
-         4
-          \
-           5
-            \
-             6
-[解题思路]
-
-         1
-          \
-           2
-          / \
-         3   4
-              \
-               5
-                \
-                 6
 对root的左子树进行处理，将左子树的根节点和左子树的右子树插入右子树中
 接下来对节点2进行处理，同样将2的左子树插入右子树中
 */
+//自己做的
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* find_mr(TreeNode* root){
+        if(root == NULL) return NULL;
+        while(root){
+            if(root->right){
+                root = root->right;
+            }
+            else if(root->left){
+               root =  root->left;
+            }
+            else if(root->left == NULL && root->right == NULL){
+                break;
+            }
+        }
+        return root;
+    }
+    void flatten(TreeNode* root) {
+        if(root == NULL ) return;
+        if(root->left == NULL && root->right==NULL) return;
+        while(root){
+            TreeNode* tmpL = find_mr(root->left);
+            if(tmpL == NULL){
+                root = root->right;
+                continue;
+            }
+            TreeNode* tmp = root->right;
+            tmpL->right = tmp;
+            root->right = root->left;
+            root->left = NULL;
+            root = root->right;
+        }
+        return;
+    }
+};

@@ -11,6 +11,7 @@ Return 3.
 Hide Tags Dynamic Programming String
 
 */
+
 /*
 动态规划，设dp[i][j]是从字符串S[0...i]中删除几个字符得到字符串T[0...j]的不同的删除方法种类，
 有上面递归的分析可知，动态规划方程如下
@@ -54,11 +55,11 @@ public:
         
         record[0]=1;
         for(int i=1; i<=S.size(); i++)
-        for(int j=T.size(); j>=1; j--)
-        {
-            if(S[i-1]==T[j-1])
-            record[j]+=record[j-1];
-        }
+            for(int j=T.size(); j>=1; j--)
+                {
+                    if(S[i-1]==T[j-1])
+                    record[j]+=record[j-1];
+                }
         
         return record[T.size()];
     }

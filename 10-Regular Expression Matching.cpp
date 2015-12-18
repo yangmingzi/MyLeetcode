@@ -93,3 +93,151 @@ public:
         return res[s.length()][p.length()];
     }
 };
+//
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        if (s == null && p == null) return true;
+        if (s == null || p == null) return false;
+        return isMatch(s, 0, p, 0);
+    }
+
+    public boolean isMatch(String s, int idx1, String p, int idx2) {
+        if (s.length() == idx1 && p.length() == idx2) return true;
+        if (p.length() == idx2) return false;
+        if (s.length() == idx1) {
+            if (idx2 + 1 >= p.length() || p.charAt(idx2 + 1) != '*') {
+                return false;
+            }
+            return isMatch(s, idx1, p, idx2 + 2);
+        }
+
+        if (idx2 + 1 <= p.length() - 1 && p.charAt(idx2 + 1) == '*') {
+            if (s.charAt(idx1) == p.charAt(idx2) || p.charAt(idx2) == '.') {
+                return isMatch(s, idx1 + 1, p, idx2) || isMatch(s, idx1, p, idx2 + 2);
+            }
+            return isMatch(s, idx1, p, idx2 + 2);
+        } else if (p.charAt(idx2) == '.') {
+            return isMatch(s, idx1 + 1, p, idx2 + 1);
+        } else {
+            return p.charAt(idx2) == s.charAt(idx1) && isMatch(s, idx1 + 1, p, idx2 + 1);
+        }
+    }
+};
+//
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        LinkedList<Integer> bag= new LinkedList<>();
+        Graph g= drawGraph(p);
+        boolean[] mark=g.marked(0);
+        for (int j=0;j<=p.length();j++){
+            if (mark[j])
+            {
+                bag.add(j);
+            }
+        }
+        for (int i=0;i<s.length();i++){
+            LinkedList<Integer> match= new LinkedList<>();
+            for (int v:bag){
+                if (v<p.length()){
+                    if (p.charAt(v)==s.charAt(i) || p.charAt(v)=='.'){
+                        match.add(v+1);
+                    }
+                }
+            }
+            bag=new LinkedList<Integer>();
+            mark=g.marked(match);
+            for (int j=0;j<=p.length();j++){
+                if (mark[j]) {
+                    bag.add(j);
+                }
+            }
+        }
+        for (int v:bag){
+            if (v==p.length()) return true;
+        }
+        return false;
+    }
+    private Graph drawGraph(String p){
+        Graph g=new Graph(p.length()+1);
+        char[] re=p.toCharArray();
+        LinkedList<Integer> stack= new LinkedList<>();
+        for (int i=0;i<p.length();i++){
+            int lp=i;
+            if (i<p.length()-1 && re[i+1]=='*'){
+                g.addEdge(lp,i+1);
+                g.addEdge(i+1,lp);
+            }
+            if (re[i]=='*'){
+                g.addEdge(i,i+1);
+            }
+        }
+        return g;
+    }
+    class Graph{
+        HashSet<Integer> [] adj;
+
+        public int getV() {
+            return V;
+        }
+
+        private int V;
+        public void addEdge(int v,int w){
+            adj[v].add(w);
+        }
+        public Graph(int m){
+            V=m;
+            adj=new HashSet[m];
+            for (int i=0;i<m;i++){
+                adj[i]=new HashSet<Integer>();
+            }
+        }
+        public Iterable<Integer> edges(int v){
+            return adj[v];
+        }
+        public boolean[] marked(int v){
+            boolean[] mark=new boolean[V];
+            calculate(v,mark);
+            return mark;
+        }
+        public boolean[] marked(Iterable<Integer> match){
+            boolean[] mark=new boolean[V];
+            for (int v:match){
+                calculate(v,mark);
+            }
+            return mark;
+        }
+        private void calculate(int v,boolean[] mark){
+            mark[v]=true;
+            for (int w:adj[v]){
+                if (!mark[w]){
+                    calculate(w,mark);
+                }
+            }
+        }
+    };
+};
+//
+
+bool isMatch(const char *s, const char *p) {
+    // Start typing your C/C++ solution below
+    // DO NOT write int main() function    
+    if (*p == '\0') return *s == '\0';
+    if (*(p+1) == '*') // 模式串的下一个字符是'*'
+    {
+        while(*p == *s || (*p == '.' && *s != '\0'))
+        {
+            //字符串与模式串匹配0/1/2...个字符的情况
+            if (isMatch(s++, p+2))
+                return true;
+        }
+        // 字符串与模式串不能匹配
+        return isMatch(s, p+2);
+    }
+    else
+    {
+        if (*p == *s || (*p == '.' && *s != '\0'))
+            return isMatch(s+1, p+1);
+        return false;
+    }
+}
+

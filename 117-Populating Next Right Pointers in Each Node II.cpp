@@ -41,3 +41,38 @@ public:
         connect(root->left);
     }
 };
+//
+/**
+ * Definition for binary tree with next pointer.
+ * struct TreeLinkNode {
+ *  int val;
+ *  TreeLinkNode *left, *right, *next;
+ *  TreeLinkNode(int x) : val(x), left(NULL), right(NULL), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeLinkNode* find_next(TreeLinkNode* root){
+        root = root->next;
+       while(root){
+           
+           if(root->left || root->right){
+               return root->left ? root->left:root->right;
+           }
+           root = root->next;
+       }
+       return NULL;
+    }
+    void connect(TreeLinkNode *root) {
+        if(root == NULL) return;
+        if(root->left){
+            root->left->next = root->right?root->right : find_next(root);
+        }
+        if(root->right){
+            root->right->next = find_next(root);
+        }
+        connect(root->right);
+        connect(root->left);
+        
+    }
+};

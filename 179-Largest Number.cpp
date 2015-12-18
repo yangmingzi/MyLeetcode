@@ -1,4 +1,11 @@
 /*
+Given a list of non negative integers, arrange them such that they form the largest number.
+
+For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.
+
+Note: The result may be very large, so you need to return a string instead of an integer.
+*/
+/*
 举个例子
 34 和 6
 346要比634小，所以34***6也比6***34小，***可以是任何相同数字
@@ -29,5 +36,24 @@ public:
         }
         if (!flag) res.push_back('0');
         return res;
+    }
+};
+//
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        vector<string> strs;
+        for_each(nums.begin(),nums.end(),[&](int i) {
+            strs.push_back(to_string(i));
+        });
+        sort(strs.begin(),strs.end(),[&](const string& a,const string& b){
+            return (a+b)>(b+a);
+        });
+        string ans = "";
+        for_each(strs.begin(),strs.end(),[&](string i){
+            if(ans=="" && i=="0") return;
+           ans += i;
+        });
+        return ans==""?"0":ans;
     }
 };
